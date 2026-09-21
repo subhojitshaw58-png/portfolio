@@ -10,6 +10,10 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Prevent double initialization if both script.js and js/script.js load
+  if (window.__SUBHOJIT_PORTFOLIO_INIT__) return;
+  window.__SUBHOJIT_PORTFOLIO_INIT__ = true;
+
   const SUBHOJIT_EMAIL = 'subhojitshaw58@gmail.com';
 
   // --------------------------------------------------------------------------
@@ -42,18 +46,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    const mouse = { x: null, y: null, radius: 150 };
-    const numParticles = Math.min(Math.floor((width * height) / 16000), 65);
-    const particles = [];
+    const mouse = { x: null, y: null, radius: 140 };
+
+    // Adaptive particle budget: lower on mobile screens to preserve battery & high FPS
+    const getParticleBudget = () => {
+      const isMobile = window.innerWidth < 768;
+      return isMobile
+        ? Math.min(Math.floor((width * height) / 22000), 28)
+        : Math.min(Math.floor((width * height) / 16000), 65);
+    };
+
+    let particles = [];
 
     class Particle {
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.8;
-        this.vy = (Math.random() - 0.5) * 0.8;
-        this.radius = Math.random() * 1.8 + 1.2;
-        this.color = Math.random() > 0.25 ? '#38bdf8' : '#818cf8';
+        this.vx = (Math.random() - 0.5) * 0.75;
+        this.vy = (Math.random() - 0.5) * 0.75;
+        this.radius = Math.random() * 1.7 + 1.1;
+        this.color = Math.random() > 0.3 ? '#38bdf8' : '#818cf8';
       }
 
       update() {
@@ -79,19 +91,25 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fillStyle = this.color;
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 6;
         ctx.shadowColor = this.color;
         ctx.fill();
         ctx.shadowBlur = 0;
       }
     }
 
-    for (let i = 0; i < numParticles; i++) {
-      particles.push(new Particle());
-    }
+    const initParticles = () => {
+      particles = [];
+      const count = getParticleBudget();
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle());
+      }
+    };
+    initParticles();
 
     const connect = () => {
-      const maxDist = 125;
+      const isMobile = window.innerWidth < 768;
+      const maxDist = isMobile ? 95 : 125;
       for (let a = 0; a < particles.length; a++) {
         for (let b = a + 1; b < particles.length; b++) {
           const dx = particles[a].x - particles[b].x;
@@ -127,17 +145,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     animate();
 
+    let resizeTimeout;
     window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        initParticles();
+      }, 150);
     });
 
+    // Mouse Tracking (Laptop & PC)
     window.addEventListener('mousemove', (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
-    });
+    }, { passive: true });
 
     window.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    // Mobile & Tablet Touch Tracking
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches.length > 0) {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
       mouse.x = null;
       mouse.y = null;
     });
@@ -218,10 +255,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 5. 3D Perspective Card Tilt & Specular Spotlight
+  // 5. 3D Perspective Card Tilt & Specular Spotlight (Laptop & PC with Mouse)
   // --------------------------------------------------------------------------
   const cyberCards = document.querySelectorAll('.cyber-card');
-  if (!prefersReducedMotion && cyberCards.length > 0) {
+  const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!prefersReducedMotion && hasFinePointer && cyberCards.length > 0) {
     cyberCards.forEach((card) => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -262,9 +300,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Mobile Navigation Drawer Toggle & Accessibility
   // --------------------------------------------------------------------------
   if (mobileToggle && navMenu) {
-    const toggleMenu = (open) => {
-      const isOpen = open !== undefined ? open : navMenu.classList.contains('open');
-      if (isOpen) {
+    const toggleMenu = (closeOnly) => {
+      const isCurrentlyOpen = navMenu.classList.contains('open');
+      if (closeOnly === true || isCurrentlyOpen) {
         navMenu.classList.remove('open');
         mobileToggle.setAttribute('aria-expanded', 'false');
         mobileToggle.setAttribute('aria-label', 'Open navigation menu');
@@ -273,6 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
         navMenu.classList.add('open');
         mobileToggle.setAttribute('aria-expanded', 'true');
         mobileToggle.setAttribute('aria-label', 'Close navigation menu');
+        document.body.style.overflow = 'hidden';
       }
     };
 
@@ -281,8 +320,10 @@ document.addEventListener('DOMContentLoaded', () => {
       toggleMenu();
     });
 
-    navLinks.forEach((link) => {
-      link.addEventListener('click', () => {
+    // Auto-close drawer on mobile when clicking any link or action button inside
+    const navClickables = navMenu.querySelectorAll('a, button');
+    navClickables.forEach((item) => {
+      item.addEventListener('click', () => {
         if (window.innerWidth <= 768) {
           toggleMenu(true);
         }
@@ -649,6 +690,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const certVerifyLabel = document.getElementById('cert-verify-label');
   const certStripVerifyContainer = document.getElementById('cert-strip-verify-container');
   const certSwitchBtns = document.querySelectorAll('.cert-switch-btn');
+  const certMobileDirectLink = document.getElementById('cert-mobile-direct-link');
 
   let activeCertId = 'infosys';
 
@@ -662,13 +704,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (certModalIssuer) certModalIssuer.textContent = data.issuer;
     if (certHudStatus) certHudStatus.textContent = data.hudStatus;
 
-    // Update Action Links (Download & New Tab)
+    // Update Action Links (Download, New Tab & Mobile Fallback)
     if (certDownloadLink) {
       certDownloadLink.href = data.pdfUrl;
       certDownloadLink.setAttribute('download', `${key}-certificate-subhojit-shaw.pdf`);
     }
     if (certExternalLink) {
       certExternalLink.href = data.pdfUrl;
+    }
+    if (certMobileDirectLink) {
+      certMobileDirectLink.href = data.pdfUrl;
     }
 
     // Update Verification portal button
