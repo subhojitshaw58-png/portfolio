@@ -608,7 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
     infosys: {
       title: "Next Gen Technologies",
       issuer: "Infosys Springboard • Course Completion • Issued Sep 4, 2025",
-      pdfUrl: "assets/certificates/infosys-springboard.pdf",
+      pdfUrl: "infosys-springboard.pdf",
       imageUrl: null,
       verifyUrl: "https://verify.onwingspan.com",
       verifyLabel: "Verify on Wingspan Portal",
@@ -617,8 +617,8 @@ document.addEventListener('DOMContentLoaded', () => {
     buildx: {
       title: "BuildX'26 Product Buildathon",
       issuer: "Resourcio Community & IIC, IIT Kharagpur • 6-Week Buildathon • Aug 22, 2026",
-      pdfUrl: "assets/certificates/buildx26-iit-kharagpur.pdf",
-      imageUrl: "assets/certificates/buildx26-preview.jpg",
+      pdfUrl: "buildx26-iit-kharagpur.pdf",
+      imageUrl: "buildx26-preview.jpg",
       verifyUrl: "https://verification.givemycertificate.com/v/59069db9-9b6c-43e1-a44a-f5490646c89b",
       verifyLabel: "Verify on GiveMyCertificate",
       hudStatus: "AUTHENTICATED CREDENTIAL // IIT KHARAGPUR IIC"
@@ -626,7 +626,7 @@ document.addEventListener('DOMContentLoaded', () => {
     techfest: {
       title: "College Ambassador Recognition",
       issuer: "Techfest, IIT Bombay • All-India Rank Under 9000",
-      pdfUrl: "assets/certificates/techfest-iit-bombay.pdf",
+      pdfUrl: "techfest-iit-bombay.pdf",
       imageUrl: null,
       verifyUrl: null,
       verifyLabel: null,
