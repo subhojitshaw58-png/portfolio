@@ -1,0 +1,15 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node / Scratch files
+node_modules/
+npm-debug.log
+*.tmp
+check_pdf.js
+copy_certs.js
+audit_certs.js
+audit.js
+render_techfest.html
+extracted_*.jpg
