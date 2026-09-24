@@ -1418,6 +1418,14 @@ button {
   background: linear-gradient(90deg, transparent, #f59e0b, transparent);
 }
 
+.holo-ibm {
+  background: radial-gradient(circle, rgba(15, 98, 254, 0.16) 0%, rgba(7, 12, 24, 0.88) 80%);
+}
+
+.holo-ibm .cert-holo-scan {
+  background: linear-gradient(90deg, transparent, #4589ff, #0f62fe, transparent);
+}
+
 .cert-preview-badge-center {
   display: flex;
   flex-direction: column;

@@ -555,17 +555,46 @@ document.addEventListener('DOMContentLoaded', () => {
         appendLog(`
           <div class="log-sys">[VERIFIED CERTIFICATIONS &amp; LEADERSHIP]</div>
           <div style="margin: 4px 0;">
-            1. <strong>Infosys Springboard:</strong> Next Gen Technologies (Sep 2025)
+            1. <strong>IBM Learning:</strong> Artificial Intelligence Analyst (IBM Virtual Internship, CEAIAIIN)
+            <br>&nbsp;&nbsp;<span style="color:#4589ff;">Course Code: CEAIAIIN (IBMCE)</span> &bull; <a href="https://ibmlearning.skillsnetwork.site" target="_blank" style="color:#38bdf8;text-decoration:underline;">ibmlearning.skillsnetwork.site</a>
+          </div>
+          <div style="margin: 4px 0;">
+            2. <strong>Infosys Springboard:</strong> Next Gen Technologies (Sep 2025)
             <br>&nbsp;&nbsp;<a href="https://verify.onwingspan.com" target="_blank" style="color:#38bdf8;text-decoration:underline;">verify.onwingspan.com</a>
           </div>
           <div style="margin: 4px 0;">
-            2. <strong>BuildX'26 Buildathon:</strong> IIT Kharagpur IIC &amp; Resourcio (6 Weeks)
+            3. <strong>BuildX'26 Buildathon:</strong> IIT Kharagpur IIC &amp; Resourcio (6 Weeks)
             <br>&nbsp;&nbsp;<a href="https://verification.givemycertificate.com/v/59069db9-9b6c-43e1-a44a-f5490646c89b" target="_blank" style="color:#38bdf8;text-decoration:underline;">GiveMyCertificate Verification</a>
           </div>
           <div style="margin: 4px 0;">
-            3. <strong>Techfest, IIT Bombay:</strong> College Ambassador Appreciation (Rank &lt; 9000)
+            4. <strong>Techfest, IIT Bombay:</strong> College Ambassador Appreciation (Rank &lt; 9000)
           </div>
+          <div class="log-dim" style="margin-top:6px;">Type <code>cert ibm</code>, <code>cert infosys</code>, <code>cert buildx</code>, or <code>cert techfest</code> to inspect.</div>
         `);
+        break;
+
+      case 'cert ibm':
+        appendLog('<div class="log-sys">Launching IBM Artificial Intelligence Analyst Credential Viewer...</div>');
+        closeTerminal();
+        setTimeout(() => openCertModal('ibm'), 150);
+        break;
+
+      case 'cert infosys':
+        appendLog('<div class="log-sys">Launching Infosys Springboard Credential Viewer...</div>');
+        closeTerminal();
+        setTimeout(() => openCertModal('infosys'), 150);
+        break;
+
+      case 'cert buildx':
+        appendLog('<div class="log-sys">Launching BuildX\'26 IIT Kharagpur Credential Viewer...</div>');
+        closeTerminal();
+        setTimeout(() => openCertModal('buildx'), 150);
+        break;
+
+      case 'cert techfest':
+        appendLog('<div class="log-sys">Launching Techfest IIT Bombay Credential Viewer...</div>');
+        closeTerminal();
+        setTimeout(() => openCertModal('techfest'), 150);
         break;
 
       case 'projects':
@@ -646,6 +675,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // 15. Interactive Cyber Credential Viewer (Modal Engine)
   // --------------------------------------------------------------------------
   const CERT_DATA = {
+    ibm: {
+      title: "Artificial Intelligence Analyst",
+      issuer: "IBM Learning • IBM Developer Skills Network • IBM India Pvt Ltd (CEAIAIIN)",
+      pdfUrl: "IBM_AI_Certificate.pdf",
+      imageUrl: null,
+      verifyUrl: "https://ibmlearning.skillsnetwork.site",
+      verifyLabel: "Verify on IBM Skills Network",
+      hudStatus: "AUTHENTICATED CREDENTIAL // IBM LEARNING & IBMCE"
+    },
     infosys: {
       title: "Next Gen Technologies",
       issuer: "Infosys Springboard • Course Completion • Issued Sep 4, 2025",
@@ -692,7 +730,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const certSwitchBtns = document.querySelectorAll('.cert-switch-btn');
   const certMobileDirectLink = document.getElementById('cert-mobile-direct-link');
 
-  let activeCertId = 'infosys';
+  let activeCertId = 'ibm';
 
   const loadCertificate = (key) => {
     const data = CERT_DATA[key];
@@ -754,7 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  const openCertModal = (key = 'infosys') => {
+  const openCertModal = (key = 'ibm') => {
     if (!certModal) return;
     loadCertificate(key);
     certModal.classList.add('active');
@@ -794,21 +832,21 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.open-cert-modal').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const certKey = btn.getAttribute('data-cert') || 'infosys';
+      const certKey = btn.getAttribute('data-cert') || 'ibm';
       openCertModal(certKey);
     });
   });
 
   document.querySelectorAll('.cert-preview-trigger').forEach((trigger) => {
     trigger.addEventListener('click', () => {
-      const certKey = trigger.getAttribute('data-cert') || 'infosys';
+      const certKey = trigger.getAttribute('data-cert') || 'ibm';
       openCertModal(certKey);
     });
 
     trigger.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        const certKey = trigger.getAttribute('data-cert') || 'infosys';
+        const certKey = trigger.getAttribute('data-cert') || 'ibm';
         openCertModal(certKey);
       }
     });
@@ -818,7 +856,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.cert-card').forEach((card) => {
     card.addEventListener('click', (e) => {
       if (e.target.closest('a') || e.target.closest('button')) return;
-      const certKey = card.getAttribute('data-cert-card') || 'infosys';
+      const certKey = card.getAttribute('data-cert-card') || 'ibm';
       openCertModal(certKey);
     });
   });
