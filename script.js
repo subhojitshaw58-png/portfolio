@@ -553,30 +553,51 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'certs':
       case 'certifications':
         appendLog(`
-          <div class="log-sys">[VERIFIED CERTIFICATIONS &amp; LEADERSHIP]</div>
+          <div class="log-sys">[VERIFIED CERTIFICATIONS &amp; CREDENTIALS]</div>
           <div style="margin: 4px 0;">
-            1. <strong>IBM Learning:</strong> Artificial Intelligence Analyst (IBM Virtual Internship, CEAIAIIN)
-            <br>&nbsp;&nbsp;<span style="color:#4589ff;">Course Code: CEAIAIIN (IBMCE)</span> &bull; <a href="https://ibmlearning.skillsnetwork.site" target="_blank" style="color:#38bdf8;text-decoration:underline;">ibmlearning.skillsnetwork.site</a>
+            1. <strong>IBM Learning:</strong> PBEL Virtual Internship - Artificial Intelligence (Sep 28, 2026)
+            <br>&nbsp;&nbsp;<span style="color:#4589ff;">Curriculum: Chatbot Dev &bull; AI Analyst</span> &bull; <a href="https://ibmlearning.skillsnetwork.site/certificates/0b02d85d-1fa7-445d-830b-ebac362b9e26" target="_blank" style="color:#38bdf8;text-decoration:underline;">ibmlearning.skillsnetwork.site</a>
           </div>
           <div style="margin: 4px 0;">
-            2. <strong>Infosys Springboard:</strong> Next Gen Technologies (Sep 2025)
+            2. <strong>IBM Learning:</strong> Build Your Own Chatbot (CB0101EN, Sep 25, 2026)
+            <br>&nbsp;&nbsp;<span style="color:#06b6d4;">Conversational AI &bull; NLP Systems</span> &bull; <a href="https://courses.ibmlearning.skillsnetwork.site/certificates/35c3524da2964443a4d61579453cbd83" target="_blank" style="color:#38bdf8;text-decoration:underline;">IBM Learning Verification</a>
+          </div>
+          <div style="margin: 4px 0;">
+            3. <strong>IBM Learning &amp; IBMCE:</strong> Artificial Intelligence Analyst (CEAIAIIN)
+            <br>&nbsp;&nbsp;<span style="color:#a855f7;">AI Analytics &bull; Model Pipelines &bull; Jagadisha Bhat</span>
+          </div>
+          <div style="margin: 4px 0;">
+            4. <strong>Infosys Springboard:</strong> Next Gen Technologies (Sep 2025)
             <br>&nbsp;&nbsp;<a href="https://verify.onwingspan.com" target="_blank" style="color:#38bdf8;text-decoration:underline;">verify.onwingspan.com</a>
           </div>
           <div style="margin: 4px 0;">
-            3. <strong>BuildX'26 Buildathon:</strong> IIT Kharagpur IIC &amp; Resourcio (6 Weeks)
+            5. <strong>BuildX'26 Buildathon:</strong> IIT Kharagpur IIC &amp; Resourcio (6 Weeks)
             <br>&nbsp;&nbsp;<a href="https://verification.givemycertificate.com/v/59069db9-9b6c-43e1-a44a-f5490646c89b" target="_blank" style="color:#38bdf8;text-decoration:underline;">GiveMyCertificate Verification</a>
           </div>
           <div style="margin: 4px 0;">
-            4. <strong>Techfest, IIT Bombay:</strong> College Ambassador Appreciation (Rank &lt; 9000)
+            6. <strong>Techfest, IIT Bombay:</strong> College Ambassador Appreciation (Rank &lt; 9000)
           </div>
-          <div class="log-dim" style="margin-top:6px;">Type <code>cert ibm</code>, <code>cert infosys</code>, <code>cert buildx</code>, or <code>cert techfest</code> to inspect.</div>
+          <div class="log-dim" style="margin-top:6px;">Type <code>cert ibm</code>, <code>cert chatbot</code>, <code>cert aianalyst</code>, <code>cert infosys</code>, <code>cert buildx</code>, or <code>cert techfest</code> to inspect.</div>
         `);
         break;
 
       case 'cert ibm':
-        appendLog('<div class="log-sys">Launching IBM Artificial Intelligence Analyst Credential Viewer...</div>');
+        appendLog('<div class="log-sys">Launching IBM Virtual Internship Credential Viewer...</div>');
         closeTerminal();
         setTimeout(() => openCertModal('ibm'), 150);
+        break;
+
+      case 'cert chatbot':
+        appendLog('<div class="log-sys">Launching IBM Chatbot Specialization Credential Viewer...</div>');
+        closeTerminal();
+        setTimeout(() => openCertModal('chatbot'), 150);
+        break;
+
+      case 'cert aianalyst':
+      case 'cert ai':
+        appendLog('<div class="log-sys">Launching IBM AI Analyst Credential Viewer...</div>');
+        closeTerminal();
+        setTimeout(() => openCertModal('aianalyst'), 150);
         break;
 
       case 'cert infosys':
@@ -676,13 +697,31 @@ document.addEventListener('DOMContentLoaded', () => {
   // --------------------------------------------------------------------------
   const CERT_DATA = {
     ibm: {
-      title: "Artificial Intelligence Analyst",
-      issuer: "IBM Learning • IBM Developer Skills Network • IBM India Pvt Ltd (CEAIAIIN)",
-      pdfUrl: "IBM_AI_Certificate.pdf",
+      title: "PBEL Equivalent to Virtual Internship - Artificial Intelligence",
+      issuer: "IBM Learning • Powered by IBM Skills Network • Issued Sep 28, 2026",
+      pdfUrl: "ibm-virtual-internship.pdf",
       imageUrl: null,
-      verifyUrl: "https://ibmlearning.skillsnetwork.site",
+      verifyUrl: "https://ibmlearning.skillsnetwork.site/certificates/0b02d85d-1fa7-445d-830b-ebac362b9e26",
       verifyLabel: "Verify on IBM Skills Network",
-      hudStatus: "AUTHENTICATED CREDENTIAL // IBM LEARNING & IBMCE"
+      hudStatus: "AUTHENTICATED CREDENTIAL // IBM VIRTUAL INTERNSHIP"
+    },
+    chatbot: {
+      title: "Build Your Own Chatbot (CB0101EN)",
+      issuer: "IBM Learning • Developer Skills Network • Issued Sep 25, 2026",
+      pdfUrl: "ibm-chatbot.pdf",
+      imageUrl: null,
+      verifyUrl: "https://courses.ibmlearning.skillsnetwork.site/certificates/35c3524da2964443a4d61579453cbd83",
+      verifyLabel: "Verify on IBM Skills Network",
+      hudStatus: "AUTHENTICATED CREDENTIAL // IBM CHATBOT SPECIALIZATION"
+    },
+    aianalyst: {
+      title: "Artificial Intelligence Analyst (CEAIAIIN)",
+      issuer: "IBM Learning • Technology Expert Labs (ISA) • Course Completion",
+      pdfUrl: "ibm-ai-analyst.pdf",
+      imageUrl: null,
+      verifyUrl: null,
+      verifyLabel: null,
+      hudStatus: "AUTHENTICATED CREDENTIAL // IBM AI ANALYST"
     },
     infosys: {
       title: "Next Gen Technologies",
